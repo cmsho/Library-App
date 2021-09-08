@@ -13,21 +13,30 @@ struct HomeView: View {
     
     var body: some View {
         
-        ScrollView {
+        NavigationView {
             
-            LazyVStack (alignment: .leading) {
+            ScrollView {
                 
-                Text("My Library")
-                    .font(.largeTitle)
-                    .bold()
-                
-                ForEach (model.books) { book in
+                LazyVStack (alignment: .leading) {
                     
-                    BookPreview(book: book)
-                        .padding()
+                    Text("My Library")
+                        .font(.largeTitle)
+                        .bold()
                     
+                    ForEach (model.books) { book in
+                        
+                        NavigationLink(
+                            destination: BookView(book: book),
+                            label: {
+                                BookPreview(book: book)
+                                    .padding()
+                            })
+                        
+                    }
                 }
-            }.padding()
+                .padding()
+            }
+            .environmentObject(model)
         }
     }
 }
