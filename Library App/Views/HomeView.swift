@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State var model = BookModel()
+    @EnvironmentObject var model : BookModel
     
     var body: some View {
         
@@ -17,26 +17,19 @@ struct HomeView: View {
             
             ScrollView {
                 
-                LazyVStack (alignment: .leading) {
-                    
-                    Text("My Library")
-                        .font(.largeTitle)
-                        .bold()
+                LazyVStack (alignment: .leading, spacing: 30) {
                     
                     ForEach (model.books) { book in
                         
-                        NavigationLink(
-                            destination: BookView(book: book),
-                            label: {
+                        NavigationLink (destination: BookView(book: book)) {
                                 BookPreview(book: book)
-                                    .padding()
-                            })
-                        
+                                    .padding([.leading, .trailing], 20)
+                            }
                     }
                 }
-                .padding()
+                .padding(.top)
             }
-            .environmentObject(model)
+            .navigationTitle("My Library")
         }
     }
 }
@@ -44,5 +37,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+            .environmentObject(BookModel())
     }
 }

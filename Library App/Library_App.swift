@@ -12,6 +12,7 @@ struct Library_AppApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(BookModel())
         }
     }
 }

@@ -8,15 +8,14 @@
 import SwiftUI
 
 struct BookView: View {
-    
-    let ratings = [1, 2, 3, 4, 5]
+
     var book:Book
     @EnvironmentObject var model:BookModel
-    @State var selectedRating = 3
+    @State private var rating = 3
     
     var body: some View {
- 
-        VStack (alignment: .leading) {
+        
+        VStack (spacing: 20) {
             
             Text("\(book.title)")
                 .font(.largeTitle)
@@ -27,34 +26,43 @@ struct BookView: View {
                 
                 Text("Read Now!")
                     .font(.title)
+                    .accentColor(.black)
                 
                 Image("cover\(book.id)")
                     .resizable()
                     .scaledToFit()
                     .padding()
-                
-                Text("Mark for later!")
-                    .bold()
-                
-                Image(systemName: "star")
-                    .foregroundColor(.yellow)
-                    .padding(.bottom)
-                
-                Text("Rate \(book.title)")
-                    .bold()
-                
-                Picker("", selection: $selectedRating, content: {
-                    ForEach (ratings, id: \.self) { rating in
-                        Text("\(rating)").tag(rating)
-                    }
-                })
-                .pickerStyle(SegmentedPickerStyle())
-                .frame(width: 280)
-                
-                
             }
             .padding()
+            
+            Text("Mark for later!")
+                .font(.headline)
+            
+            
+            Button(action: {model.updateFavourite(forId: book.id)}) {
+                Image(systemName: book.isFavourite ? "star.fill" : "star")
+                    .resizable()
+                    .frame(width: 28, height: 28)
+            }
+            .accentColor(.yellow)
+            
+            
+            Text("Rate \(book.title)")
+                .font(.headline)
+            
+            Picker("Rate this book!", selection: $rating, content: {
+                ForEach (1..<6) { index in
+                    Text("\(index)").tag(index)
+                }
+            })
+            .pickerStyle(SegmentedPickerStyle())
+            .padding([.leading, .trailing, .bottom], 60)
+            .onChange(of: rating, perform: { value in
+                model.updateRating(forId: book.id, rating: rating)
+            })
+            
         }
+        .onAppear{rating = book.rating}
     }
 }
 
@@ -62,7 +70,7 @@ struct BookView_Previews: PreviewProvider {
     static var previews: some View {
         
         let model = BookModel()
-        
         BookView(book: model.books[1])
+            .environmentObject(BookModel())
     }
 }
