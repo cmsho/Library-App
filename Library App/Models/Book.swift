@@ -1,7 +1,7 @@
 //
 //  Book.swift
 //  Library App
-//
+
 //  Created by Colton Shoenberger on 9/7/21.
 //
 
@@ -10,12 +10,12 @@ import Foundation
 
 class Book : Identifiable, Decodable {
     
-    var title:String
-    var author:String
-    var isFavourite:Bool
-    var currentPage:Int
-    var rating:Int
-    var id:Int
-    var content:[String]
+    var title:String = "Title"
+    var author:String = "Author"
+    var isFavourite:Bool = false
+    var currentPage:Int = 1
+    var rating:Int = 3
+    var id:Int = 1
+    var content:[String] = ["This is a test book"]
     
 }

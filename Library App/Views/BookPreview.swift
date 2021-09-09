@@ -34,8 +34,8 @@ struct BookPreview: View {
                         
                         Image(systemName: "star.fill")
                             .resizable()
-                            .foregroundColor(.yellow)
                             .frame(width: 28, height: 28)
+                            .foregroundColor(.yellow)
                         
                     }
                 }
@@ -59,8 +59,6 @@ struct BookPreview: View {
 struct BookPreview_Previews: PreviewProvider {
     static var previews: some View {
         
-        let model = BookModel()
-        
-        BookPreview(book: model.books[1])
+        BookPreview(book: Book())
     }
 }

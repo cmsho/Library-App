@@ -32,4 +32,11 @@ class BookModel : ObservableObject {
         }
     }
     
+    /// Update the specified book's current page. Does nothing if `forId` is invalid.
+    func updatePage(forId: Int, page: Int) {
+        if let index = books.firstIndex(where: { $0.id == forId }) {
+            books[index].currentPage = page
+        }
+    }
+    
 }
